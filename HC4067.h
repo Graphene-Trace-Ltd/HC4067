@@ -10,6 +10,7 @@
 
 
 #include "Arduino.h"
+#include "digitalWriteFast.h"
 
 #define HC4067_LIB_VERSION         (F("0.3.0"))
 
@@ -26,16 +27,16 @@ public:
     uint8_t i = 4;
     while (i--)
     {
-      pinMode(_pins[i], OUTPUT);
-      digitalWrite(_pins[i], LOW);
+      pinModeFast(_pins[i], OUTPUT);
+      digitalWriteFast(_pins[i], LOW);
     }
     _channel = 0;
 
     if (enablePin != 255)
     {
       _enablePin = enablePin;
-      pinMode(_enablePin, OUTPUT);
-      digitalWrite(_enablePin, HIGH);
+      pinModeFast(_enablePin, OUTPUT);
+      digitalWriteFast(_enablePin, HIGH);
     }
   }
 
@@ -58,7 +59,7 @@ public:
         //  only write changed pins. //  AVR only?
         if (mask & _changed)
         {
-          digitalWrite(_pins[i], (mask & _new));
+          digitalWriteFast(_pins[i], (mask & _new));
         }
         i--;
         mask >>= 1;
@@ -80,7 +81,7 @@ public:
   {
     if (_enablePin != 255)
     {
-      digitalWrite(_enablePin, LOW);
+      digitalWriteFast(_enablePin, LOW);
     }
   }
 
@@ -89,7 +90,7 @@ public:
   {
     if (_enablePin != 255)
     {
-      digitalWrite(_enablePin, HIGH);
+      digitalWriteFast(_enablePin, HIGH);
     }
   }
 
@@ -98,7 +99,7 @@ public:
   {
     if (_enablePin != 255)
     {
-      return (digitalRead(_enablePin) == LOW);
+      return (digitalReadFast(_enablePin) == LOW);
     }
     return true;
   }

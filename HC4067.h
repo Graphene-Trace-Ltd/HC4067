@@ -7,13 +7,10 @@
 // PURPOSE: Arduino library for CD74HC4067 1 x 16 channel multiplexer and compatibles.
 //     URL: https://github.com/RobTillaart/HC4067
 
-
-
 #include "Arduino.h"
 #include "digitalWriteFast.h"
 
-#define HC4067_LIB_VERSION         (F("0.3.0"))
-
+#define HC4067_LIB_VERSION (F("0.3.0"))
 
 class HC4067
 {
@@ -40,10 +37,10 @@ public:
     }
   }
 
-
   bool setChannel(uint8_t channel, bool disable = true)
   {
-    if (channel > 15) return false;
+    if (channel > 15)
+      return false;
     uint8_t _new = channel;
     if (_new != _channel)
     {
@@ -52,7 +49,7 @@ public:
       uint8_t i = 3;
       if (disable)
       {
-        this->disable();  //  prevent ghost channels.
+        this->disable(); //  prevent ghost channels.
       }
       while (mask)
       {
@@ -70,12 +67,10 @@ public:
     return true;
   }
 
-
   uint8_t getChannel()
   {
     return _channel;
   }
-
 
   void enable()
   {
@@ -85,7 +80,6 @@ public:
     }
   }
 
-
   void disable()
   {
     if (_enablePin != 255)
@@ -93,7 +87,6 @@ public:
       digitalWriteFast(_enablePin, HIGH);
     }
   }
-
 
   bool isEnabled()
   {
@@ -104,13 +97,10 @@ public:
     return true;
   }
 
-
 private:
-  uint8_t  _pins[4];
-  uint8_t  _enablePin = 255;
-  uint8_t  _channel   = 0;
+  uint8_t _pins[4];
+  uint8_t _enablePin = 255;
+  uint8_t _channel = 0;
 };
 
-
 //  -- END OF FILE --
-
